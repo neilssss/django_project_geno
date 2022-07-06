@@ -1,4 +1,16 @@
+
 {% load static %}
+
+{% if messages %}
+    {% for message in messages %}
+        
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %} 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -82,24 +94,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="#" class="nav-item nav-link active">Home</a>
+                <a href="index" class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif%}">Home</a>
                 <a href="#" class="nav-item nav-link">About</a>
                 <a href="#" class="nav-item nav-link">Service</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
-                        <a href="price.html" class="dropdown-item">Pricing Plan</a>
-                        <a href="team.html" class="dropdown-item">Our Dentist</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="appointment.html" class="dropdown-item">Appointment</a>
+                    {% if user.is_authenticated and user.is_staff %}
                         <a href="user/" class="dropdown-item">User</a>
-                        <a href="{% url 'buy' %}" class="dropdown-item">Buy Fish</a>
+                        <a href="{% url 'buy' %}" class="dropdown-item">Add Fish</a>
+                        <a href="{% url 'buy1' %}" class="dropdown-item">Buy Fish</a>
+                    {% else %}
+                        <a href="{% url 'buy1' %}" class="dropdown-item">Buy Fish</a>
+                    {% endif %}
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+               
+            {% if user.is_authenticated %}
+                <a href="{% url 'cart' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'cart' %}active{% endif%}">Cart</a>
+                
+                <a href="{% url 'wishlist' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'wishlist' %}active{% endif%}">Wish List</a>
+                <a href="{% url 'myorder' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'myorder' %}active{% endif%}">My Order</a>
+                <a href="{% url 'logoutuser' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'logoutuser' %}active{% endif%}">Log-out</a>
+            {% else %}
+                <a href="{% url 'registeruser' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'registeruser' %}active{% endif%}">Sign-up</a>
+                <a href="{% url 'loginuser' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'loginuser' %}active{% endif%}">Log-in</a>
+                <a href="{% url 'social:begin' 'facebook' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'loginuser' %}active{% endif%}">Log-in Facebook</a>
+                
+            {% endif %}
             </div>
             <button type="button" class="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
-            <a href="appointment.html" class="btn btn-primary py-2 px-4 ms-3">Appointment</a>
+            <a href="#" class="btn btn-primary py-2 px-4 ms-3">{{user.first_name}}</a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -134,7 +159,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">Keep Your Life Healthy</h5>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">Take The Best Fish</h1>
-                            <a href="appointment.html" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
+                            <a href="#" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
                             <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Contact Us</a>
                         </div>
                     </div>

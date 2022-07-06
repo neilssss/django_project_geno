@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
 <h1>Update Fish Profile</h1>
 
@@ -12,8 +15,7 @@ Fish Name:<br>
 Size:<br>
 <input name="fish_size" value="{{ fish.fish_size }}">
 <br><br>
-Price:<br>
-<input name="fish_price" value="{{ fish.fish_price }}">
-<br><br>
 <input type="submit" value="Submit">
 </form>
+
+{% endblock %}
