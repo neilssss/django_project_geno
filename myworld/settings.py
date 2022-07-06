@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-)!xxh%dq^urx_5d2aj0$keja2y)^vui$d=ns!1#fw#zn4bo9$+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','10.0.48.201','members','192.168.72.187']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','10.0.48.101','members','192.168.72.187']
+
+#third_party
+THIRD_PARTY_APPS = [
+    'social_django',
+]
 
 
 # Application definition
@@ -37,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'social_django',
     'members.apps.MembersConfig'
 ]
 
@@ -48,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'myworld.urls'
@@ -63,10 +71,24 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # <-- Here
+                'social_django.context_processors.login_redirect', # <-- Here
             ],
         },
     },
 ]
+
+#add on July 06, 2022
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.github.GithubOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
 
 WSGI_APPLICATION = 'myworld.wsgi.application'
 
@@ -117,6 +139,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -125,5 +150,15 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR, 'static'),
 ]
+
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1432512470508216'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '9caa747560e702e160197c1866fd2da9'  # App Secret
+
+LOGIN_URL = 'loginuser'
+LOGOUT_URL = 'logoutuser'
+LOGIN_REDIRECT_URL = 'index'
+
 
 #DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
