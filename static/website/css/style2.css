@@ -21,6 +21,7 @@
   color: white;
 }  
 
+
 * {box-sizing: border-box;}
 
 body {
@@ -95,3 +96,12 @@ body {
     border: 1px solid #ccc;  
   }
 }
+  .mydiv{
+    margin: 10px 120px 10px 120px;
+    
+  }
+
+    .mydivloginuser{
+    margin: 10px 60px 10px 60px;
+    
+  }
